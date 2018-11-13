@@ -1,6 +1,6 @@
 import json
 
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 
 # Create your views here.
@@ -43,3 +43,28 @@ def get_body_json(request):
     print(req_data["a"])
     print(req_data["b"])
     return HttpResponse("get json data success")
+
+def response_json(request):
+    return HttpResponse("OK",content_type="text/html",status=200)
+
+def response_json1(request):
+    response = HttpResponse("OK",content_type="text/html",status=201)
+    response["Itcast"] = "Python"
+    return response
+
+def response_json2(request):
+    json_dict = {"name":"xcg","age":3}
+    return JsonResponse(json_dict)
+
+def cookie_demo(request):
+    response = HttpResponse("cookie_demo")
+    response.set_cookie("name","chaoge",max_age=3600)
+    name = request.COOKIES.get("name")
+    print(name)
+    return response
+
+def session_demo(request):
+    request.session["name"] = "Xcg"
+    name = request.session.get("name")
+    print(name)
+    return HttpResponse("session_demo")
